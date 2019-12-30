@@ -155,7 +155,7 @@ __global__ void maxpool(double* input, int input_size, double* m_output, int out
 {
 	int idx = blockDim.x * blockIdx.x + threadIdx.x;
 	int val[4];
-	int minval = INT_MIN;
+	int minval;
 	//printf("%d\n", result[k]);
 	for (int i = 0; i < input_size - 1; i = i + stride)
 	{
@@ -165,6 +165,7 @@ __global__ void maxpool(double* input, int input_size, double* m_output, int out
 			val[1] = input[idx * (input_size * input_size) + i * input_size + j + 1];
 			val[2] = input[idx * (input_size * input_size) + (i + 1) * input_size + j];
 			val[3] = input[idx * (input_size * input_size) + (i + 1) * input_size + j + 1];
+			minval = INT_MIN;
 			for (int k = 0; k < 4; k++)
 			{
 				if (minval < val[k])
